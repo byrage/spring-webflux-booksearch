@@ -1,0 +1,4 @@
+rootProject.name = 'booksearch'
+
+include 'booksearch-api'
+include 'booksearch-domain'
