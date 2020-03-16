@@ -1,4 +1,4 @@
-rootProject.name = 'booksearch'
+rootProject.name = 'springboot-book-search'
 
-include 'booksearch-api'
-include 'booksearch-domain'
+include 'book-search-api'
+include 'book-search-domain'
