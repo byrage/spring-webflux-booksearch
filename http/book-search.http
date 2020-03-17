@@ -1,0 +1,27 @@
+### 로그인
+GET {{book-search-api}}/member/1
+Content-Type: application/json
+
+{
+    "password":"password"
+}
+
+### 회원가입
+POST {{book-search-api}}/member/1
+Content-Type: application/json
+
+{
+    "password":"password"
+}
+
+### 내 검색 히스토리
+GET {{book-search-api}}/member/1/book/search/history?targetDate=2020-03-17
+
+### 책 검색
+GET {{book-search-api}}/book/search?keyword=test
+
+### 인기 키워드 목록
+GET {{book-search-api}}/popular-keyword
+
+###
+
