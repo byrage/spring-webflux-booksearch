@@ -1,8 +1,0 @@
-bootJar.enabled = true
-jar.enabled = false
-
-dependencies {
-    implementation project(':booksearch-domain')
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    testImplementation 'io.projectreactor:reactor-test'
-}
