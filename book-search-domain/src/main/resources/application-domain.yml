@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: local
+
+---
+spring:
+  profiles: local
+    jpa:
+      properties:
+        hibernate:
+          default_batch_fetch_size: 100
+          show_log: true
+          format_sql: true
