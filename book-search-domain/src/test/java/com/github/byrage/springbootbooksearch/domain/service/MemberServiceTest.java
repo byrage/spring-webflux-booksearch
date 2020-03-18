@@ -1,16 +1,19 @@
 package com.github.byrage.springbootbooksearch.domain.service;
 
 import com.github.byrage.springbootbooksearch.domain.entity.Member;
+import com.github.byrage.springbootbooksearch.domain.exception.ExistsMemberException;
 import com.github.byrage.springbootbooksearch.domain.repository.MemberRepository;
 import com.github.byrage.springbootbooksearch.domain.util.PasswordUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@Transactional
 @SpringBootTest
 class MemberServiceTest {
 
@@ -47,7 +50,7 @@ class MemberServiceTest {
 
         // when & then
         assertThatThrownBy(() -> memberService.signUp(memberId, password))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(ExistsMemberException.class);
     }
 
     @Test
