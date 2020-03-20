@@ -18,7 +18,7 @@ public class BookSearchService {
         this.naverBookSearchClient = naverBookSearchClient;
     }
 
-    public BookSearchResponse searchBook(String keyword, int page, int size) {
+    public BookSearchResponse searchBook(String memberId, String keyword, int page, int size) {
         CompletableFuture<BookSearchResponse> kakaoBookSearchCompletableFuture = searchBookFromKakao(keyword, page, size);
         return kakaoBookSearchCompletableFuture
                 .handle((bookSearchResponse, exception) -> exception)

@@ -20,14 +20,16 @@ public class SearchHistoryService {
     private final MemberRepository memberRepository;
 
     @Transactional(readOnly = true)
-    public List<SearchHistory> findHistoriesByMemberId(Long memberId) {
-        return searchHistoryRepository.findAllByMemberIdOrderBySearchDateDesc(memberId);
+    public List<SearchHistory> findHistoriesByMemberId(String memberId) {
+        Member member = memberRepository.findByMemberId(memberId)
+                .orElseThrow(NotExistMemberException::new);
+        return searchHistoryRepository.findAllByMemberIdOrderBySearchDateDesc(member.getId());
     }
 
     @Transactional
     public SearchHistory saveSearchHistory(String memberId, String keyword, LocalDateTime now) {
         Member member = memberRepository.findByMemberId(memberId)
-                .orElseThrow(() -> new NotExistMemberException("존재하지 않는 회원입니다."));
+                .orElseThrow(NotExistMemberException::new);
 
         return searchHistoryRepository.save(SearchHistory.builder()
                 .member(member)

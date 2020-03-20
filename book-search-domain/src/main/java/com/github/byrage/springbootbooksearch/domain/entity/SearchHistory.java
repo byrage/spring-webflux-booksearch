@@ -14,7 +14,7 @@ public class SearchHistory extends BaseEntity {
     @GeneratedValue
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "member_id")
     private Member member;
     @Column
     private String searchKeyword;

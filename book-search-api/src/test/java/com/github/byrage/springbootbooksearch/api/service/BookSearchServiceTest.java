@@ -40,7 +40,7 @@ class BookSearchServiceTest {
                 .willReturn(TestKakaoBookSearchResponse.call());
 
         // when
-        BookSearchResponse response = bookSearchService.searchBook("테스트", 1, 1);
+        BookSearchResponse response = bookSearchService.searchBook("byrage", "테스트", 1, 1);
 
         // then
         then(kakaoBookSearchClient).should().inquireKakaoBookSearch(anyString(), anyInt(), anyInt());
@@ -60,7 +60,7 @@ class BookSearchServiceTest {
                 .willReturn(TestNaverBookSearchResponse.call());
 
         // when
-        BookSearchResponse response = bookSearchService.searchBook("테스트", 1, 1);
+        BookSearchResponse response = bookSearchService.searchBook("byrage", "테스트", 1, 1);
 
         // then
         then(kakaoBookSearchClient).should().inquireKakaoBookSearch(anyString(), anyInt(), anyInt());
