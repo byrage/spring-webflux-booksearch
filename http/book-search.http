@@ -1,13 +1,13 @@
-### 로그인
-GET {{book-search-api}}/member/1
+### 회원가입
+POST {{book-search-api}}/member/byrage
 Content-Type: application/json
 
 {
     "password":"password"
 }
 
-### 회원가입
-POST {{book-search-api}}/member/1
+### 로그인
+GET {{book-search-api}}/member/byrage
 Content-Type: application/json
 
 {
@@ -15,10 +15,10 @@ Content-Type: application/json
 }
 
 ### 내 검색 히스토리
-GET {{book-search-api}}/member/1/book/search/history?targetDate=2020-03-17
+GET {{book-search-api}}/member/byrage/book/search/history?targetDate=2020-03-20
 
 ### 책 검색
-GET {{book-search-api}}/book/search?keyword=test
+GET {{book-search-api}}/book/search?member=byrage&keyword=test
 
 ### 인기 키워드 목록
 GET {{book-search-api}}/popular-keyword
