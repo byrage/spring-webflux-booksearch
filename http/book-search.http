@@ -14,11 +14,11 @@ Content-Type: application/json
     "password":"password"
 }
 
-### 내 검색 히스토리
-GET {{book-search-api}}/member/byrage/book/search/history
-
 ### 책 검색
 GET {{book-search-api}}/book/search?member=byrage&keyword=카카오
+
+### 내 검색 히스토리
+GET {{book-search-api}}/member/byrage/book/search/history
 
 ### 인기 키워드 목록
 GET {{book-search-api}}/popular-keyword
