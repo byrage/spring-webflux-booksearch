@@ -2,5 +2,6 @@ rootProject.name = 'springboot-book-search'
 
 include 'book-search-api'
 include 'book-search-domain'
+include ':clients:core'
 include 'clients:kakao-client'
 include 'clients:naver-client'
