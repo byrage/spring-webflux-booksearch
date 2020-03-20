@@ -6,6 +6,7 @@ import com.github.byrage.springbootbooksearch.domain.repository.SearchHistoryRep
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,10 +19,12 @@ public class SearchHistoryService {
 
     private final SearchHistoryRepository searchHistoryRepository;
 
+    @Transactional(readOnly = true)
     public List<SearchHistory> findHistoriesByMemberId(Long memberId) {
         return searchHistoryRepository.findAllByMemberIdOrderBySearchDateDesc(memberId);
     }
 
+    @Transactional(readOnly = true)
     public List<PopulateSearchKeyword> findPopulateKeywords() {
         return searchHistoryRepository.findPopulateSearchKeywords(POPULATE_SEARCH_KEYWORDS_PAGE_REQUEST);
     }

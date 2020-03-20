@@ -5,6 +5,7 @@ import com.github.byrage.springbootbooksearch.domain.exception.ExistsMemberExcep
 import com.github.byrage.springbootbooksearch.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -12,6 +13,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    @Transactional
     public Member signUp(String memberId, String password) {
 
         if (memberRepository.findByMemberId(memberId)
@@ -27,6 +29,7 @@ public class MemberService {
                 ;
     }
 
+    @Transactional
     public boolean signIn(String memberId, String password) {
         return memberRepository.findByMemberId(memberId)
                 .map(member -> member.isMatchedPassword(password))
