@@ -5,7 +5,6 @@ import com.github.byrage.springbootbooksearch.clients.kakao.exception.KakaoClien
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,13 +20,14 @@ public class KakaoBookSearchClient {
     private static final String BOOK_SEARCH_PATH = "/v3/search/book?query={query}&page={page}&size={size}";
     private final RestTemplate kakaoClientRestTemplate;
 
-    public ResponseEntity<KakaoBookSearchResponse> inquireKakaoBookSearch(String keyword, int page, int size) {
+    public KakaoBookSearchResponse inquireKakaoBookSearch(String keyword, int page, int size) {
         Map<String, Object> uriVariables = buildUriVariables(keyword, page, size);
         URI uri = kakaoClientRestTemplate.getUriTemplateHandler()
                 .expand(BOOK_SEARCH_PATH, uriVariables);
 
         try {
-            return kakaoClientRestTemplate.exchange(uri, HttpMethod.GET, null, KakaoBookSearchResponse.class);
+            return kakaoClientRestTemplate.exchange(uri, HttpMethod.GET, null, KakaoBookSearchResponse.class)
+                    .getBody();
         } catch (Exception e) {
             log.error("[Kakao] 책 검색 API 실패. keyword={}, page={}, size={}", keyword, page, size, e);
             throw new KakaoClientException("[Kakao] 책 검색 API 실패. keyword=" + keyword + ", page=" + page + ", size=" + size, e);
