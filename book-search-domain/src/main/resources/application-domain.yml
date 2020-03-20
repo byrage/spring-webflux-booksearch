@@ -11,3 +11,7 @@ spring:
         default_batch_fetch_size: 100
         show_log: true
         format_sql: true
+
+  h2:
+    console:
+      enabled: true
