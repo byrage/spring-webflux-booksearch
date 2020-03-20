@@ -13,20 +13,18 @@ public class SearchHistory extends BaseEntity {
     @Id
     @GeneratedValue
     private Long id;
-    /**
-     * Member 테이블의 id. ex) 1,2,3,...
-     */
-    @Column
-    private Long memberId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private Member member;
     @Column
     private String searchKeyword;
     @Column
     private LocalDateTime searchDate;
 
     @Builder
-    public SearchHistory(Long memberId, String searchKeyword, LocalDateTime searchDate) {
-        this.memberId = memberId;
+    public SearchHistory(Member member, String searchKeyword, LocalDateTime searchDateTime) {
+        this.member = member;
         this.searchKeyword = searchKeyword;
-        this.searchDate = searchDate;
+        this.searchDate = searchDateTime;
     }
 }
