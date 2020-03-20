@@ -3,5 +3,8 @@ jar.enabled = false
 
 dependencies {
     implementation project(':book-search-domain')
+    implementation project(':clients:kakao-client')
+    implementation project(':clients:naver-client')
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
 }

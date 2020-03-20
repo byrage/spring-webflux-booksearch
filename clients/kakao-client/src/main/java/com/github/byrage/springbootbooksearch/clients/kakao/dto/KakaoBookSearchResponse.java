@@ -5,7 +5,7 @@ import lombok.*;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class KakaoBookSearchResponse {
 
     private Meta meta;
