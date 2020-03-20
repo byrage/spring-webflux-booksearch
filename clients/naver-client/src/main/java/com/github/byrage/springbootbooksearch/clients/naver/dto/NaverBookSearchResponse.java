@@ -9,8 +9,8 @@ import java.util.List;
 public class NaverBookSearchResponse {
 
     private String lastBuildDate;
-    private Long total;
-    private Long start;
-    private Long display;
+    private long total;
+    private long start;
+    private long display;
     private List<Item> items;
 }

@@ -20,8 +20,9 @@ public class NaverBookSearchClient {
     private static final String BOOK_SEARCH_PATH = "/v1/search/book.json?query={query}&start={start}&display={display}";
     private final RestTemplate naverClientRestTemplate;
 
-    public NaverBookSearchResponse inquireNaverBookSearch(String keyword, int start, int display) {
-        Map<String, Object> uriVariables = buildUriVariables(keyword, start, display);
+    public NaverBookSearchResponse inquireNaverBookSearch(String keyword, int page, int size) {
+        int start = calculateStart(page, size);
+        Map<String, Object> uriVariables = buildUriVariables(keyword, start, size);
         URI uri = naverClientRestTemplate.getUriTemplateHandler()
                 .expand(BOOK_SEARCH_PATH, uriVariables);
 
@@ -29,8 +30,8 @@ public class NaverBookSearchClient {
             return naverClientRestTemplate.exchange(uri, HttpMethod.GET, null, NaverBookSearchResponse.class)
                     .getBody();
         } catch (Exception e) {
-            log.error("[Naver] 책 검색 API 실패. keyword={}, start={}, display={}", keyword, start, display, e);
-            throw new NaverClientException("[Naver] 책 검색 API 실패. keyword=" + keyword + ", start=" + start + ", display=" + display, e);
+            log.error("[Naver] 책 검색 API 실패. keyword={}, start={}, display={}", keyword, page, size, e);
+            throw new NaverClientException("[Naver] 책 검색 API 실패. keyword=" + keyword + ", start=" + page + ", display=" + size, e);
         }
     }
 
@@ -40,5 +41,9 @@ public class NaverBookSearchClient {
         uriVariables.put("start", start);
         uriVariables.put("display", display);
         return uriVariables;
+    }
+
+    private int calculateStart(int page, int size) {
+        return page * size + 1;
     }
 }

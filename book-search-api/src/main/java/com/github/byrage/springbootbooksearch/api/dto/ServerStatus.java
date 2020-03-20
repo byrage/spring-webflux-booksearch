@@ -9,5 +9,5 @@ public enum ServerStatus {
     SUCCESS("성공"),
     FAIL("실패");
 
-    private final String status;
+    private final String defaultMessage;
 }

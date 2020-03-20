@@ -10,29 +10,44 @@ public class CommonResponse <T> {
 
     private String status;
     private String message;
+    private long totalCount;
+    private long currentPage;
     private T data;
     private LocalDateTime serverDatetime;
 
-    private CommonResponse(ServerStatus serverStatus, T data) {
-        this(serverStatus, null, data);
-    }
-
-    private CommonResponse(ServerStatus serverStatus, String message, T data) {
-        this.status = serverStatus.getStatus();
+    private CommonResponse(ServerStatus serverStatus, String message, long totalCount, long currentPage, T data) {
+        this.status = serverStatus.getDefaultMessage();
         this.message = message;
+        this.totalCount = totalCount;
+        this.currentPage = currentPage;
         this.data = data;
         this.serverDatetime = LocalDateTime.now();
     }
 
-    public static <T> CommonResponse<T> success(T data) {
-        return new CommonResponse<>(ServerStatus.SUCCESS, data);
+    public static <T> CommonResponse<T> success(long totalCount, long currentPage, T data) {
+        return new CommonResponse<>(
+                ServerStatus.SUCCESS,
+                ServerStatus.SUCCESS.getDefaultMessage(),
+                totalCount,
+                currentPage,
+                data);
     }
 
-    public static <T> CommonResponse<T> fail() {
-        return new CommonResponse<>(ServerStatus.FAIL, null);
+    public static CommonResponse<Void> fail() {
+        return new CommonResponse<>(
+                ServerStatus.FAIL,
+                ServerStatus.FAIL.getDefaultMessage(),
+                0,
+                0,
+                null);
     }
 
-    public static <T> CommonResponse<T> fail(String message) {
-        return new CommonResponse<>(ServerStatus.FAIL, message, null);
+    public static CommonResponse<Void> fail(String message) {
+        return new CommonResponse<>(
+                ServerStatus.FAIL,
+                message,
+                0,
+                0,
+                null);
     }
 }

@@ -30,13 +30,16 @@ class MemberServiceTest {
         String password = "password";
 
         // when
-        Member result = memberService.signUp(memberId, password);
+        boolean result = memberService.signUp(memberId, password);
+        Member member = memberRepository.findByMemberId(memberId)
+                .orElseThrow(IllegalStateException::new);
 
         // then
-        assertThat(result).isNotNull().satisfies(member -> {
-            assertThat(member.getId()).isNotNull();
-            assertThat(member.getMemberId()).isEqualTo(memberId);
-            assertThat(member.getPassword()).isEqualTo(PasswordUtils.encode(password));
+        assertThat(result).isTrue();
+        assertThat(member).isNotNull().satisfies(m -> {
+            assertThat(m.getId()).isNotNull();
+            assertThat(m.getMemberId()).isEqualTo(memberId);
+            assertThat(m.getPassword()).isEqualTo(PasswordUtils.encode(password));
         });
     }
 

@@ -1,9 +1,11 @@
 package com.github.byrage.springbootbooksearch.api.controller;
 
+import com.github.byrage.springbootbooksearch.api.dto.CommonResponse;
 import com.github.byrage.springbootbooksearch.domain.dto.PopulateSearchKeyword;
 import com.github.byrage.springbootbooksearch.domain.service.PopulateKeywordService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,11 +16,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PopularKeywordController {
 
+    private static final int POPULATE_SEARCH_PAGE = 1;
+    private static final int POPULATE_SEARCH_SIZE = 10;
     private final PopulateKeywordService populateKeywordService;
 
     @GetMapping
-    public List<PopulateSearchKeyword> findPopularKeyword() {
+    public CommonResponse<List<PopulateSearchKeyword>> findPopularKeyword() {
         log.info("findPopularKeyword");
-        return populateKeywordService.findPopulateKeywords();
+        Page<PopulateSearchKeyword> populateKeywords = populateKeywordService.findPopulateKeywords(POPULATE_SEARCH_PAGE, POPULATE_SEARCH_SIZE);
+        return CommonResponse.success(populateKeywords.getTotalElements(), POPULATE_SEARCH_PAGE, populateKeywords.getContent());
     }
 }

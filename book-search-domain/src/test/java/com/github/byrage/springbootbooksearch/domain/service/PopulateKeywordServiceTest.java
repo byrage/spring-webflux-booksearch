@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -34,14 +35,16 @@ class PopulateKeywordServiceTest {
     @DisplayName("인기 검색어 조회")
     void findPopulateKeywords() {
         // given
+        int page = 0;
+        int size = 10;
         Member member = memberRepository.save(buildMember(memberId));
         searchHistoryRepository.saveAll(dummySearchHistoriesForTestPopulateKeywords(member));
 
         // when
-        List<PopulateSearchKeyword> result = populateKeywordService.findPopulateKeywords();
+        Page<PopulateSearchKeyword> result = populateKeywordService.findPopulateKeywords(page, size);
 
         // then
-        assertThat(result).hasSizeLessThanOrEqualTo(PopulateKeywordService.POPULATE_SEARCH_KEYWORDS_SIZE);
+        assertThat(result).hasSizeLessThanOrEqualTo(size);
         assertThat(result).first().extracting(PopulateSearchKeyword::getSearchKeyword).isEqualTo("카카오뱅크");
         assertThat(result).extracting(PopulateSearchKeyword::getCount).isSortedAccordingTo(Comparator.reverseOrder());
     }

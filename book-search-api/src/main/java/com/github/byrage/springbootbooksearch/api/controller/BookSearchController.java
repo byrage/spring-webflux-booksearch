@@ -1,6 +1,7 @@
 package com.github.byrage.springbootbooksearch.api.controller;
 
-import com.github.byrage.springbootbooksearch.api.dto.BookSearchResponse;
+import com.github.byrage.springbootbooksearch.api.dto.BookSearchResult;
+import com.github.byrage.springbootbooksearch.api.dto.CommonResponse;
 import com.github.byrage.springbootbooksearch.api.service.BookSearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,8 +16,12 @@ public class BookSearchController {
     private final BookSearchService bookSearchService;
 
     @GetMapping
-    public BookSearchResponse searchBookByKeyword(@RequestParam String memberId, @RequestParam String keyword) {
-        log.info("searchBookByKeyword. keyword={}", keyword);
-        return bookSearchService.searchBook(memberId, keyword, 1, 10);
+    public CommonResponse<Object> searchBookByKeyword(@RequestParam String member, @RequestParam String keyword) {
+        log.info("searchBookByKeyword. member={}, keyword={}", member, keyword);
+        BookSearchResult bookSearchResult = bookSearchService.searchBook(member, keyword, 1, 10);
+        return CommonResponse.success(
+                bookSearchResult.getTotalCount(),
+                bookSearchResult.getCurrentPage(),
+                bookSearchResult.getData());
     }
 }

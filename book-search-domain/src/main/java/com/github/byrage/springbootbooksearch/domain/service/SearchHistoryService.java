@@ -5,12 +5,13 @@ import com.github.byrage.springbootbooksearch.domain.entity.SearchHistory;
 import com.github.byrage.springbootbooksearch.domain.exception.NotExistMemberException;
 import com.github.byrage.springbootbooksearch.domain.repository.MemberRepository;
 import com.github.byrage.springbootbooksearch.domain.repository.SearchHistoryRepository;
+import com.github.byrage.springbootbooksearch.domain.util.PageRequestBuilder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,10 +21,10 @@ public class SearchHistoryService {
     private final MemberRepository memberRepository;
 
     @Transactional(readOnly = true)
-    public List<SearchHistory> findHistoriesByMemberId(String memberId) {
+    public Page<SearchHistory> findHistoriesByMemberId(String memberId, Integer page, Integer size) {
         Member member = memberRepository.findByMemberId(memberId)
                 .orElseThrow(NotExistMemberException::new);
-        return searchHistoryRepository.findAllByMemberIdOrderBySearchDateDesc(member.getId());
+        return searchHistoryRepository.findAllByMemberIdOrderBySearchDateDesc(member.getId(), PageRequestBuilder.build(page, size));
     }
 
     @Transactional

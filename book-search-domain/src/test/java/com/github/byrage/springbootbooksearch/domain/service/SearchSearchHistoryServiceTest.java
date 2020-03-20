@@ -8,10 +8,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,33 +31,31 @@ class SearchSearchHistoryServiceTest {
     private MemberRepository memberRepository;
 
     @Test
-    @DisplayName("[{index}] 히스토리 조회 시 검색일시 내림차순으로 정렬한다")
+    @DisplayName("히스토리 조회 시 검색일시 내림차순으로 정렬한다")
     void findHistoriesByMemberId() {
         // given
+        int size = 25;
         String memberId = "byrage";
         Member member = memberRepository.save(Member.builder().memberId(memberId).build());
         LocalDateTime localDateTime = LocalDateTime.of(2020, 3, 18, 0, 0);
-        List<SearchHistory> histories = Arrays.asList(
-                buildHistory(member.getId(), "키워드1", localDateTime.minusHours(2)),
-                buildHistory(member.getId(), "키워드2", localDateTime.minusHours(1)),
-                buildHistory(member.getId(), "키워드3", localDateTime)
-        );
+        List<SearchHistory> histories = IntStream.rangeClosed(1, 100)
+                .mapToObj(minusHour -> buildHistory(member, "키워드", localDateTime.minusHours(minusHour)))
+                .collect(Collectors.toList());
+        Collections.shuffle(histories);
         searchHistoryRepository.saveAll(histories);
 
         // when
-        List<SearchHistory> result = searchHistoryService.findHistoriesByMemberId(memberId);
+        Page<SearchHistory> result = searchHistoryService.findHistoriesByMemberId(memberId, 0, size);
 
         // then
-        assertThat(result).hasSize(histories.size())
+        assertThat(result).hasSize(size)
                 .extracting(SearchHistory::getSearchDate)
                 .isSortedAccordingTo(Comparator.reverseOrder());
     }
 
-    private SearchHistory buildHistory(Long memberId, String searchKeyword, LocalDateTime searchDateTime) {
+    private SearchHistory buildHistory(Member member, String searchKeyword, LocalDateTime searchDateTime) {
         return SearchHistory.builder()
-                .member(Member.builder()
-                        .id(memberId)
-                        .build())
+                .member(member)
                 .searchKeyword(searchKeyword)
                 .searchDateTime(searchDateTime)
                 .build();
