@@ -2,4 +2,4 @@ bootJar.enabled = false
 jar.enabled = true
 
 dependencies {
-    api project(':clients:core')}
+    implementation project(':clients:core')}

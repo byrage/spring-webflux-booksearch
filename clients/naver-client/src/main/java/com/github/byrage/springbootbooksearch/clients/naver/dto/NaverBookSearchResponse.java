@@ -1,13 +1,12 @@
 package com.github.byrage.springbootbooksearch.clients.naver.dto;
 
-import com.github.byrage.springbootbooksearch.clients.core.dto.BookSearchResponse;
 import lombok.*;
 
 import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class NaverBookSearchResponse implements BookSearchResponse {
+public class NaverBookSearchResponse {
 
     private String lastBuildDate;
     private Long total;
