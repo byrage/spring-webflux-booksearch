@@ -1,0 +1,13 @@
+spring:
+  profiles: test
+
+naver:
+  client:
+    protocol: https
+    url: openapi.naver.com
+    x-naver-client-id: jEXWsfx02tGze90XHMH9
+    x-naver-client-secret: YlY1FXmzhp
+    connection-timeout-millis: 1000
+    read-timeout-millis: 1000
+
+
