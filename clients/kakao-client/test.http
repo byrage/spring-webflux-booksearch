@@ -1,0 +1,4 @@
+GET https://dapi.kakao.com/v3/search/book?query=카카오&page=1&size=50
+Authorization: KakaoAK 230540ea26a12f96603f54359c4fddc8
+
+###

@@ -1,0 +1,11 @@
+spring:
+  profiles: local
+
+kakao:
+  client:
+    protocol: https
+    url: dapi.kakao.com
+    authorization: KakaoAK 230540ea26a12f96603f54359c4fddc8
+    connection-timeout-millis: 1000
+    read-timeout-millis: 1000
+
