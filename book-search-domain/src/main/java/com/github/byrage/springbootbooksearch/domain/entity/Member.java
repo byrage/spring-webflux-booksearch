@@ -14,7 +14,7 @@ public class Member extends BaseEntity {
      * Member 테이블의 id. ex) 1,2,3,...
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     /**
      * 회원 id. ex) byrage
@@ -25,8 +25,7 @@ public class Member extends BaseEntity {
     private String password;
 
     @Builder
-    public Member(Long id, String memberId, String password) {
-        this.id = id;
+    public Member(String memberId, String password) {
         this.memberId = memberId;
         this.password = PasswordUtils.encode(password);
     }
