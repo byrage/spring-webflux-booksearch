@@ -2,7 +2,7 @@ package com.github.byrage.springbootbooksearch.api.controller;
 
 import com.github.byrage.springbootbooksearch.api.dto.CommonResponse;
 import com.github.byrage.springbootbooksearch.api.dto.PasswordRequest;
-import com.github.byrage.springbootbooksearch.domain.entity.SearchHistory;
+import com.github.byrage.springbootbooksearch.domain.dto.SearchHistoryResult;
 import com.github.byrage.springbootbooksearch.domain.service.MemberService;
 import com.github.byrage.springbootbooksearch.domain.service.SearchHistoryService;
 import lombok.RequiredArgsConstructor;
@@ -34,12 +34,14 @@ public class MemberController {
     }
 
     @GetMapping("/{id}/book/search/history")
-    public CommonResponse<List<SearchHistory>> findHistories(@PathVariable String id, Integer page, Integer size) {
+    public CommonResponse<List<SearchHistoryResult>> findHistories(@PathVariable String id,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size) {
         log.info("findHistories. id={}, page={}, size={}", id, page, size);
-        Page<SearchHistory> searchHistories = searchHistoryService.findHistoriesByMemberId(id, page, size);
+        Page<SearchHistoryResult> searchHistories = searchHistoryService.findHistoriesByMemberId(id, page, size);
         return CommonResponse.success(
                 searchHistories.getTotalElements(),
-                searchHistories.getSize(),
+                searchHistories.getNumber(),
                 searchHistories.getContent());
     }
 

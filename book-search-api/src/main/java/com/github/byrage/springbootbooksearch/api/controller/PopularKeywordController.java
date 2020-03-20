@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PopularKeywordController {
 
-    private static final int POPULATE_SEARCH_PAGE = 1;
+    private static final int POPULATE_SEARCH_PAGE = 0;
     private static final int POPULATE_SEARCH_SIZE = 10;
     private final PopulateKeywordService populateKeywordService;
 
@@ -24,6 +24,6 @@ public class PopularKeywordController {
     public CommonResponse<List<PopulateSearchKeyword>> findPopularKeyword() {
         log.info("findPopularKeyword");
         Page<PopulateSearchKeyword> populateKeywords = populateKeywordService.findPopulateKeywords(POPULATE_SEARCH_PAGE, POPULATE_SEARCH_SIZE);
-        return CommonResponse.success(populateKeywords.getTotalElements(), POPULATE_SEARCH_PAGE, populateKeywords.getContent());
+        return CommonResponse.success(populateKeywords.getTotalElements(), populateKeywords.getNumber(), populateKeywords.getContent());
     }
 }

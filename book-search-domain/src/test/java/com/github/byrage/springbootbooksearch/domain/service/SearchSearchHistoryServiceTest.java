@@ -1,5 +1,6 @@
 package com.github.byrage.springbootbooksearch.domain.service;
 
+import com.github.byrage.springbootbooksearch.domain.dto.SearchHistoryResult;
 import com.github.byrage.springbootbooksearch.domain.entity.Member;
 import com.github.byrage.springbootbooksearch.domain.entity.SearchHistory;
 import com.github.byrage.springbootbooksearch.domain.repository.MemberRepository;
@@ -45,11 +46,11 @@ class SearchSearchHistoryServiceTest {
         searchHistoryRepository.saveAll(histories);
 
         // when
-        Page<SearchHistory> result = searchHistoryService.findHistoriesByMemberId(memberId, 0, size);
+        Page<SearchHistoryResult> result = searchHistoryService.findHistoriesByMemberId(memberId, 0, size);
 
         // then
         assertThat(result).hasSize(size)
-                .extracting(SearchHistory::getSearchDate)
+                .extracting(SearchHistoryResult::getSearchDate)
                 .isSortedAccordingTo(Comparator.reverseOrder());
     }
 

@@ -16,9 +16,12 @@ public class BookSearchController {
     private final BookSearchService bookSearchService;
 
     @GetMapping
-    public CommonResponse<Object> searchBookByKeyword(@RequestParam String member, @RequestParam String keyword) {
-        log.info("searchBookByKeyword. member={}, keyword={}", member, keyword);
-        BookSearchResult bookSearchResult = bookSearchService.searchBook(member, keyword, 1, 10);
+    public CommonResponse<Object> searchBookByKeyword(@RequestParam String member,
+            @RequestParam String keyword,
+            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "10") Integer size) {
+        log.info("searchBookByKeyword. member={}, keyword={}, page={}, size={}", member, keyword, page, size);
+        BookSearchResult bookSearchResult = bookSearchService.searchBook(member, keyword, page, size);
         return CommonResponse.success(
                 bookSearchResult.getTotalCount(),
                 bookSearchResult.getCurrentPage(),
